@@ -52,3 +52,8 @@ It implements a **Pump Failure Prediction System** using **machine learning anom
 ---
 
 ## 🚀 Example Output
+   False       0.98      0.92      0.95     1940
+    True       0.21      0.54      0.30       60
+
+accuracy                           0.91     2000
+
