@@ -1,51 +1,54 @@
-# SUMMER-2025-INTERNSHIP-PROJECT
-# 🔧 Pump Failure Prediction using Machine Learning
+# 🔧 Pump Failure Prediction with Anomaly Detection
 
 This project was developed during my **Summer 2025 internship at Oil and Natural Gas Corporation Limited (ONGC)**.  
-The goal was to build a **Pump Failure Prediction System** to enhance maintenance efficiency, minimize unplanned downtime, and optimize resource allocation in large-scale industrial operations.
+It implements a **Pump Failure Prediction System** using **machine learning anomaly detection techniques** to minimize downtime and improve predictive maintenance.
 
 ---
 
 ## 📌 Project Overview
-- Designed and implemented a **predictive maintenance pipeline** for pump systems.  
-- Processed and cleaned large **time-series sensor datasets** (vibration, temperature, pressure).  
-- Engineered features (rolling averages, statistical metrics, interaction ratios).  
-- Built anomaly detection models:
-  - **Isolation Forest** 🌲
-  - **One-Class SVM** 🖥
-- Applied **Principal Component Analysis (PCA)** for dimensionality reduction & visualization.  
-- Delivered **failure predictions + root cause indicators** for proactive maintenance scheduling.  
+- Worked with **historical pump operational data** (CSV sensor logs).  
+- Preprocessed raw sensor data (cleaning, timestamp parsing, sensor classification).  
+- Engineered basic time-based features (hour, day, weekday).  
+- Applied **anomaly detection models**:
+  - 🌲 **Isolation Forest**  
+  - 🖥 **One-Class SVM**
+- Combined predictions to identify likely pump failures.  
+- Evaluated results with a simulated `true_failure` variable for demonstration.  
 
 ---
 
 ## ⚙️ Tech Stack
-- **Languages:** Python (Pandas, NumPy, Matplotlib, Seaborn)  
-- **ML Libraries:** Scikit-learn (Isolation Forest, One-Class SVM, PCA), Statsmodels  
-- **Visualization:** Matplotlib, Seaborn  
-- **Deployment-ready design:** Modular pipeline with `load → preprocess → feature engineer → train → evaluate → export results`.
+- **Languages:** Python (Pandas, NumPy)  
+- **ML Libraries:** scikit-learn (Isolation Forest, One-Class SVM, StandardScaler, Classification Report)  
+- **Other:** Matplotlib / Seaborn (optional for visualization)  
 
 ---
 
-## 🚀 Key Results
-- Achieved reliable anomaly detection on pump datasets.  
-- Identified **sensor parameters most correlated with failures**.  
-- Generated **confusion matrices, PCA plots, and feature importance charts**.  
-- Final system predicted both **time-to-failure** and **likely causes** of failures.  
+## 🛠 How It Works
+1. **Data Ingestion**:  
+   - Reads multiple `.csv` files from the `data/` folder.  
+   - Expected columns: `name`, `date_time`, `value`, `machine_on`.  
 
-### Example Outputs:
-- Confusion Matrix:  
-  ![Confusion Matrix](results/confusion_matrix.png)
+2. **Preprocessing**:  
+   - Parses timestamps, removes invalid rows.  
+   - Classifies sensors into: `vibration`, `temperature`, `pressure`.  
+   - Pivots into a wide table format.  
 
-- PCA Visualization:  
-  ![PCA](results/pca_visualization.png)
+3. **Feature Engineering**:  
+   - Adds temporal features: `hour`, `day`, `weekday`.  
+   - Creates `true_failure` labels (simulated with 3% probability for testing).  
 
-- Feature Importance:  
-  ![Feature Importance](results/feature_importance.png)
+4. **Modeling**:  
+   - **Isolation Forest** detects abnormal sensor behaviors.  
+   - **One-Class SVM** provides alternative anomaly detection.  
+   - Thresholds are set at the 5th percentile of anomaly scores.  
+   - Final prediction = **union** of both models’ predictions.  
+
+5. **Evaluation**:  
+   - Prints a **classification report** (precision, recall, F1).  
+   - Displays **Top 10 predicted failures** with sensor readings.  
+   - Outputs the **next 100 pump predictions** for inspection.  
 
 ---
 
-## 📦 Setup & Usage
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/yourusername/pump-failure-prediction.git
-   cd pump-failure-prediction
+## 🚀 Example Output
